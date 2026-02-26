@@ -55,15 +55,15 @@ const LoginPage: React.FC = () => {
     navigate("/", { replace: true });
   };
 
-  const gradientBackground = "min-h-screen flex items-center justify-center p-4 bg-gradient-to-r from-[#4B39EF] to-[#CC5500]";
-  const cardStyles = "w-full max-w-md shadow-2xl rounded-xl";
-  const buttonGradient = "bg-gradient-to-r from-[#4B39EF] to-[#CC5500] hover:from-[#3a29d5] hover:to-[#b84c00] text-white font-semibold";
+  const gradientBackground = "min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-[#0c4a6e] via-[#059669] to-[#d97706]";
+  const cardStyles = "w-full max-w-md shadow-2xl rounded-xl backdrop-blur-sm bg-white/95";
+  const buttonGradient = "bg-gradient-to-r from-[#0c4a6e] to-[#059669] hover:from-[#0a3a56] hover:to-[#047857] text-white font-semibold";
 
   return (
     <div className={gradientBackground}>
       <Card className={cardStyles}>
         <CardHeader className="text-center pt-8 pb-6">
-          <CardTitle className="text-3xl font-extrabold text-[#4B39EF]">
+          <CardTitle className="text-3xl font-extrabold text-[#0c4a6e]">
             {isSignUp ? "Create Your Account" : "Welcome to HomeValue+"}
           </CardTitle>
           <p className="text-sm text-gray-500">
@@ -86,7 +86,7 @@ const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="focus:border-[#CC5500] focus:ring-[#CC5500]"
+                className="focus:border-[#059669] focus:ring-[#059669]"
                 aria-label="email"
               />
             </div>
@@ -104,7 +104,7 @@ const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="focus:border-[#CC5500] focus:ring-[#CC5500]"
+                className="focus:border-[#059669] focus:ring-[#059669]"
                 aria-label="password"
               />
             </div>
@@ -125,7 +125,7 @@ const LoginPage: React.FC = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <Button variant="link" onClick={() => setIsSignUp(!isSignUp)} className="text-sm text-[#4B39EF] hover:text-[#CC5500] p-0 h-auto">
+            <Button variant="link" onClick={() => setIsSignUp(!isSignUp)} className="text-sm text-[#0c4a6e] hover:text-[#d97706] p-0 h-auto">
               {isSignUp ? "Already have an account? Log In" : "Don't have an account? Sign Up"}
             </Button>
           </div>
