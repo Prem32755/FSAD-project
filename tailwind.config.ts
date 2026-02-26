@@ -5,12 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-  border: 'rgba(0,0,0,0.1)', // soft border color
-  background: '#f9fafb',
-  foreground: '#111827',
-  primary: '#3b82f6', // calm blue
-  secondary: '#10b981', // soft green
-  accent: '#f59e0b', // orange accent
+  border: 'rgba(210, 220, 230, 0.3)',
+  background: '#ffffff',
+  foreground: '#1e293b',
+  primary: '#0c4a6e', // Deep professional blue
+  secondary: '#059669', // Trust-focused green
+  accent: '#d97706', // Luxury gold
 },
 
     },
