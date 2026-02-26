@@ -51,8 +51,12 @@ const LoginPage: React.FC = () => {
       description: `Welcome, ${email}`,
     });
 
-    // After login, redirect to home
-    navigate("/", { replace: true });
+    // Redirect based on user role
+    if (email === "admin@homevalue.com") {
+      navigate("/admin", { replace: true });
+    } else {
+      navigate("/", { replace: true });
+    }
   };
 
   const gradientBackground = "min-h-screen flex items-center justify-center p-4 relative overflow-hidden";

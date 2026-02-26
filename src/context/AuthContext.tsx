@@ -5,6 +5,7 @@ type User = { email: string } | null;
 
 interface AuthContextValue {
   user: User;
+  isAdmin: boolean;
   login: (email: string, password?: string) => Promise<boolean>;
   logout: () => void;
   getHistory: () => Array<{ email: string; at: string }>;
@@ -24,6 +25,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return null;
     }
   });
+
+  const isAdmin = user?.email === "admin@homevalue.com";
 
   useEffect(() => {
     // persist user
@@ -73,7 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, getHistory }}>
+    <AuthContext.Provider value={{ user, isAdmin, login, logout, getHistory }}>
       {children}
     </AuthContext.Provider>
   );
