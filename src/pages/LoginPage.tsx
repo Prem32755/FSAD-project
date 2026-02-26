@@ -55,12 +55,21 @@ const LoginPage: React.FC = () => {
     navigate("/", { replace: true });
   };
 
-  const gradientBackground = "min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-[#0c4a6e] via-[#059669] to-[#d97706]";
-  const cardStyles = "w-full max-w-md shadow-2xl rounded-xl backdrop-blur-sm bg-white/95";
+  const gradientBackground = "min-h-screen flex items-center justify-center p-4 relative overflow-hidden";
+  const cardStyles = "w-full max-w-md shadow-2xl rounded-xl backdrop-blur-md bg-white/90 relative z-10";
   const buttonGradient = "bg-gradient-to-r from-[#0c4a6e] to-[#059669] hover:from-[#0a3a56] hover:to-[#047857] text-white font-semibold";
 
   return (
     <div className={gradientBackground}>
+      {/* Background Image with Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80')",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0c4a6e]/80 via-[#059669]/70 to-[#d97706]/60" />
+      
       <Card className={cardStyles}>
         <CardHeader className="text-center pt-8 pb-6">
           <CardTitle className="text-3xl font-extrabold text-[#0c4a6e]">
