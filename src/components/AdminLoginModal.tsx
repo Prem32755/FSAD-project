@@ -61,7 +61,7 @@ export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
         className="relative w-full max-w-md max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl
                    bg-white/97 text-gray-900 dark:(bg-gray-900/95 text-gray-100) border border-gray-200/30"
       >
-        <CardHeader className="p-6 rounded-t-2xl bg-gradient-to-r from-[#4B39EF] to-[#CC5500] text-white relative">
+        <CardHeader className="p-6 rounded-t-2xl bg-gradient-to-r from-[#0c4a6e] to-[#059669] text-white relative">
           <Button
             variant="ghost"
             size="sm"
@@ -77,8 +77,8 @@ export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
               <Shield className="w-6 h-6" />
             </div>
             <div>
-              <CardTitle id="admin-login-title" className="text-2xl font-semibold">Admin Access</CardTitle>
-              <CardDescription className="text-white/90">Secure login to platform management</CardDescription>
+              <CardTitle id="admin-login-title" className="text-2xl font-serif font-semibold">Admin Access</CardTitle>
+              <CardDescription className="text-white/90 font-light">Secure login to platform management</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -86,11 +86,11 @@ export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
         {/* Card content: keep readable inputs; allow dropdowns/popovers to escape if added later */}
         <CardContent className="p-6 overflow-visible">
           {/* Demo Credentials Info */}
-          <div className="mb-6 p-4 bg-gradient-to-r from-white/40 to-white/20 rounded-lg border border-gray-100/40">
+          <div className="mb-6 p-4 bg-gradient-to-r from-[#0c4a6e]/5 to-[#059669]/5 rounded-lg border border-[#0c4a6e]/20">
             <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-[#4B39EF] mt-0.5" />
+              <AlertCircle className="w-5 h-5 text-[#0c4a6e] mt-0.5" />
               <div>
-                <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-1">Demo Credentials</h4>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-1">Demo Credentials</h4>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   Email: <span className="font-mono">admin@homevalueplus.com</span><br />
                   Password: <span className="font-mono">admin123</span>
@@ -114,7 +114,7 @@ export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
                 onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                 required
                 className="bg-white border border-gray-200 text-gray-900 placeholder-gray-500
-                           focus:outline-none focus:ring-2 focus:ring-[#4B39EF]/30 focus:border-[#4B39EF]"
+                           focus:outline-none focus:ring-2 focus:ring-[#0c4a6e]/30 focus:border-[#0c4a6e]"
                 aria-label="Admin email"
               />
             </div>
@@ -132,7 +132,7 @@ export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
                 onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
                 required
                 className="bg-white border border-gray-200 text-gray-900 placeholder-gray-500
-                           focus:outline-none focus:ring-2 focus:ring-[#4B39EF]/30 focus:border-[#4B39EF]"
+                           focus:outline-none focus:ring-2 focus:ring-[#0c4a6e]/30 focus:border-[#0c4a6e]"
                 aria-label="Admin password"
               />
             </div>
@@ -140,7 +140,7 @@ export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 rounded-lg bg-gradient-to-r from-[#4B39EF] to-[#CC5500] text-white flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-lg bg-gradient-to-r from-[#0c4a6e] to-[#059669] hover:opacity-90 text-white flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
@@ -159,7 +159,7 @@ export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-300">
               Need help? Contact{' '}
-              <a href="mailto:support@homevalueplus.com" className="text-[#4B39EF] hover:underline">
+              <a href="mailto:support@homevalueplus.com" className="text-[#0c4a6e] hover:underline font-medium">
                 support@homevalueplus.com
               </a>
             </p>
