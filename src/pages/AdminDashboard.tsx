@@ -95,7 +95,7 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-muted/30 to-background">
       {/* Header */}
-      <div className="bg-gradient-primary text-white py-8">
+      <div className="bg-gradient-to-r from-[#0c4a6e] to-[#059669] text-white py-8">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
             <div>
@@ -107,11 +107,11 @@ const AdminDashboard = () => {
                   </Button>
                 </Link>
               </div>
-              <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
-              <p className="text-white/90">Manage HomeValue+ platform and user assessments</p>
+              <h1 className="text-4xl font-serif font-bold mb-2 tracking-tight">Admin Dashboard</h1>
+              <p className="text-white/90 font-light">Manage HomeValue+ platform and user assessments</p>
             </div>
             <div className="text-right">
-              <p className="text-white/80 text-sm">Welcome back,</p>
+              <p className="text-white/80 text-sm font-light">Welcome back,</p>
               <p className="text-xl font-semibold">Admin</p>
             </div>
           </div>
@@ -126,9 +126,9 @@ const AdminDashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Total Users</p>
-                  <p className="text-3xl font-bold text-primary">{stats.totalUsers.toLocaleString()}</p>
+                  <p className="text-3xl font-bold text-[#0c4a6e]">{stats.totalUsers.toLocaleString()}</p>
                 </div>
-                <Users className="w-10 h-10 text-primary" />
+                <Users className="w-10 h-10 text-[#0c4a6e]" />
               </div>
             </CardContent>
           </Card>
@@ -138,9 +138,9 @@ const AdminDashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Assessments</p>
-                  <p className="text-3xl font-bold text-success">{stats.totalAssessments.toLocaleString()}</p>
+                  <p className="text-3xl font-bold text-[#059669]">{stats.totalAssessments.toLocaleString()}</p>
                 </div>
-                <Home className="w-10 h-10 text-success" />
+                <Home className="w-10 h-10 text-[#059669]" />
               </div>
             </CardContent>
           </Card>
@@ -150,9 +150,9 @@ const AdminDashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Avg. Value Increase</p>
-                  <p className="text-3xl font-bold text-accent">{stats.avgValueIncrease}</p>
+                  <p className="text-3xl font-bold text-[#d97706]">{stats.avgValueIncrease}</p>
                 </div>
-                <IndianRupee className="w-10 h-10 text-accent" />
+                <IndianRupee className="w-10 h-10 text-[#d97706]" />
               </div>
             </CardContent>
           </Card>
@@ -162,9 +162,9 @@ const AdminDashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Active Recommendations</p>
-                  <p className="text-3xl font-bold text-purple-600">{stats.activeRecommendations}</p>
+                  <p className="text-3xl font-bold text-[#0c4a6e]">{stats.activeRecommendations}</p>
                 </div>
-                <TrendingUp className="w-10 h-10 text-purple-600" />
+                <TrendingUp className="w-10 h-10 text-[#0c4a6e]" />
               </div>
             </CardContent>
           </Card>
@@ -177,10 +177,10 @@ const AdminDashboard = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-2xl">Recent Assessments</CardTitle>
+                    <CardTitle className="text-2xl font-serif">Recent Assessments</CardTitle>
                     <CardDescription>Latest property assessment submissions</CardDescription>
                   </div>
-                  <Button className="btn-hero">
+                  <Button className="bg-gradient-to-r from-[#0c4a6e] to-[#059669] hover:opacity-90 text-white">
                     <Plus className="w-4 h-4 mr-2" />
                     New Assessment
                   </Button>
@@ -224,7 +224,7 @@ const AdminDashboard = () => {
           <div>
             <Card className="shadow-brand-lg">
               <CardHeader>
-                <CardTitle>Quick Actions</CardTitle>
+                <CardTitle className="font-serif">Quick Actions</CardTitle>
                 <CardDescription>Common administrative tasks</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -250,7 +250,7 @@ const AdminDashboard = () => {
             {/* System Status */}
             <Card className="shadow-brand-lg mt-6">
               <CardHeader>
-                <CardTitle>System Status</CardTitle>
+                <CardTitle className="font-serif">System Status</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
