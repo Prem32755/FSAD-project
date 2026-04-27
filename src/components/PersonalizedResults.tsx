@@ -1,12 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { 
-  TrendingUp, 
-  IndianRupee, 
-  Clock, 
-  MapPin, 
-  Home, 
+import {
+  TrendingUp,
+  IndianRupee,
+  Clock,
+  MapPin,
+  Home,
   Star,
   CheckCircle,
   ArrowRight
@@ -40,24 +40,22 @@ interface Recommendation {
 }
 
 const generateRecommendations = (data: PropertyFormData): Recommendation[] => {
-  const budget = parseInt(data.budget);
+  const budget = parseInt(data.budget, 10);
   const isOldProperty = data.propertyAge > 15;
   const isLargeProperty = data.area > 1000;
   const needsRenovation = data.currentCondition === 'needs-renovation';
-
   const recommendations: Recommendation[] = [];
 
-  // High priority recommendations based on budget and condition
   if (budget >= 50000 && needsRenovation) {
     recommendations.push({
       id: '1',
       title: 'Fresh Interior Paint & Lighting',
-      description: 'Complete interior painting with modern colors and LED lighting upgrade throughout the property.',
-      cost: '₹25,000 - ₹45,000',
+      description: 'Complete interior painting with modern colors and LED lighting upgrades for an immediate visual lift.',
+      cost: 'Rs. 25,000 - Rs. 45,000',
       roi: '+18% Value',
       timeframe: '4-6 days',
       priority: 'high',
-      reasons: ['Property needs renovation', 'High ROI for budget', 'Quick completion'],
+      reasons: ['Property needs renovation', 'High ROI for this budget', 'Quick completion'],
       contractors: 12
     });
   }
@@ -66,12 +64,12 @@ const generateRecommendations = (data: PropertyFormData): Recommendation[] => {
     recommendations.push({
       id: '2',
       title: 'Modular Kitchen Upgrade',
-      description: 'Install space-efficient modular kitchen with modern storage and appliances.',
-      cost: '₹80,000 - ₹1,20,000',
+      description: 'Install space-efficient cabinets and improved storage to make the kitchen more attractive for buyers.',
+      cost: 'Rs. 80,000 - Rs. 1,20,000',
       roi: '+25% Value',
       timeframe: '7-10 days',
       priority: 'medium',
-      reasons: [`Popular in ${data.city}`, 'High buyer appeal', 'Modern lifestyle demand'],
+      reasons: [`Popular with buyers in ${data.city}`, 'High functional value', 'Strong resale appeal'],
       contractors: 8
     });
   }
@@ -79,13 +77,13 @@ const generateRecommendations = (data: PropertyFormData): Recommendation[] => {
   if (budget >= 200000 && isLargeProperty) {
     recommendations.push({
       id: '3',
-      title: 'Smart Home Automation',
-      description: 'Install smart switches, automated lighting, and security systems for modern living.',
-      cost: '₹1,50,000 - ₹2,50,000',
+      title: 'Smart Home and Security Setup',
+      description: 'Add smart switches, security sensors, and modern lighting controls for a more premium feel.',
+      cost: 'Rs. 1,50,000 - Rs. 2,50,000',
       roi: '+30% Value',
       timeframe: '3-5 days',
       priority: 'medium',
-      reasons: ['Large property size', 'Tech-savvy market demand', 'Future-proof investment'],
+      reasons: ['Large property footprint', 'Modern family demand', 'Future-ready investment'],
       contractors: 5
     });
   }
@@ -93,26 +91,26 @@ const generateRecommendations = (data: PropertyFormData): Recommendation[] => {
   if (isOldProperty) {
     recommendations.push({
       id: '4',
-      title: 'Electrical & Plumbing Upgrade',
-      description: 'Complete rewiring and plumbing system upgrade for safety and efficiency.',
-      cost: '₹60,000 - ₹1,00,000',
+      title: 'Electrical and Plumbing Upgrade',
+      description: 'Replace aging lines and fixtures to improve safety, reliability, and buyer confidence.',
+      cost: 'Rs. 60,000 - Rs. 1,00,000',
       roi: '+20% Value',
       timeframe: '5-8 days',
       priority: 'high',
-      reasons: [`Property age: ${data.propertyAge} years`, 'Safety compliance', 'Essential upgrade'],
+      reasons: [`Property age is ${data.propertyAge} years`, 'Safety compliance', 'Essential maintenance'],
       contractors: 15
     });
   }
 
   recommendations.push({
     id: '5',
-    title: 'Balcony Garden & Exterior',
-    description: 'Create a beautiful balcony garden with plants and improve exterior aesthetics.',
-    cost: '₹8,000 - ₹20,000',
+    title: 'Balcony and Exterior Refresh',
+    description: 'Use plants, lighting, and seating to make the home feel more inviting on a modest budget.',
+    cost: 'Rs. 8,000 - Rs. 20,000',
     roi: '+12% Value',
     timeframe: '2-3 days',
     priority: 'high',
-    reasons: ['Budget-friendly', 'High visual impact', 'Eco-friendly appeal'],
+    reasons: ['Budget-friendly', 'High visual impact', 'Useful for apartments and resale'],
     contractors: 20
   });
 
@@ -120,17 +118,17 @@ const generateRecommendations = (data: PropertyFormData): Recommendation[] => {
     recommendations.push({
       id: '6',
       title: 'Solar Panel Installation',
-      description: 'Install rooftop solar panels for sustainable energy and cost savings.',
-      cost: '₹2,50,000 - ₹4,00,000',
+      description: 'Reduce running costs and add long-term value with rooftop solar for suitable homes.',
+      cost: 'Rs. 2,50,000 - Rs. 4,00,000',
       roi: '+35% Value',
       timeframe: '2-3 days',
       priority: 'low',
-      reasons: ['Government incentives', 'Long-term savings', 'Sustainability trend'],
+      reasons: ['Long-term savings', 'Government incentive potential', 'Sustainability appeal'],
       contractors: 3
     });
   }
 
-  return recommendations.slice(0, 4); // Return top 4 recommendations
+  return recommendations.slice(0, 4);
 };
 
 export const PersonalizedResults = ({ propertyData, onClose }: PersonalizedResultsProps) => {
@@ -158,7 +156,6 @@ export const PersonalizedResults = ({ propertyData, onClose }: PersonalizedResul
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 overflow-auto">
       <div className="min-h-screen py-8 px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
           <Card className="mb-8 shadow-brand-xl animate-fade-up">
             <CardHeader className="bg-gradient-primary text-white">
               <div className="flex items-center justify-between">
@@ -168,12 +165,8 @@ export const PersonalizedResults = ({ propertyData, onClose }: PersonalizedResul
                     Based on your {propertyData.propertyType} in {propertyData.locality}, {propertyData.city}
                   </p>
                 </div>
-                <Button
-                  variant="ghost"
-                  onClick={onClose}
-                  className="text-white hover:bg-white/20"
-                >
-                  ✕
+                <Button variant="ghost" onClick={onClose} className="text-white hover:bg-white/20">
+                  X
                 </Button>
               </div>
             </CardHeader>
@@ -203,7 +196,7 @@ export const PersonalizedResults = ({ propertyData, onClose }: PersonalizedResul
                 <div className="flex items-center gap-3">
                   <IndianRupee className="w-8 h-8 text-primary" />
                   <div>
-                    <div className="font-medium">₹{parseInt(propertyData.budget).toLocaleString('en-IN')}</div>
+                    <div className="font-medium">Rs. {parseInt(propertyData.budget, 10).toLocaleString('en-IN')}</div>
                     <div className="text-sm text-muted-foreground">Budget</div>
                   </div>
                 </div>
@@ -211,11 +204,10 @@ export const PersonalizedResults = ({ propertyData, onClose }: PersonalizedResul
             </CardContent>
           </Card>
 
-          {/* Recommendations */}
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             {recommendations.map((rec, index) => (
-              <Card 
-                key={rec.id} 
+              <Card
+                key={rec.id}
                 className="hover-lift shadow-brand-lg animate-scale-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -224,20 +216,17 @@ export const PersonalizedResults = ({ propertyData, onClose }: PersonalizedResul
                     <Badge className={`${getPriorityColor(rec.priority)} text-white px-3 py-1`}>
                       {getPriorityText(rec.priority)}
                     </Badge>
-                    <div className="text-right">
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Star className="w-4 h-4 text-yellow-500" />
-                        {rec.contractors}+ contractors available
-                      </div>
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <Star className="w-4 h-4 text-yellow-500" />
+                      {rec.contractors}+ contractors available
                     </div>
                   </div>
                   <CardTitle className="text-xl">{rec.title}</CardTitle>
                 </CardHeader>
-                
+
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground">{rec.description}</p>
-                  
-                  {/* Metrics */}
+
                   <div className="grid grid-cols-3 gap-4 py-4 border-y border-border/50">
                     <div className="text-center">
                       <IndianRupee className="w-5 h-5 mx-auto mb-1 text-primary" />
@@ -256,7 +245,6 @@ export const PersonalizedResults = ({ propertyData, onClose }: PersonalizedResul
                     </div>
                   </div>
 
-                  {/* Reasons */}
                   <div>
                     <h4 className="font-medium mb-2">Why this is recommended:</h4>
                     <ul className="space-y-1">
@@ -278,7 +266,6 @@ export const PersonalizedResults = ({ propertyData, onClose }: PersonalizedResul
             ))}
           </div>
 
-          {/* Action Buttons */}
           <div className="text-center space-y-4 animate-fade-up">
             <Button onClick={onClose} className="btn-hero px-8">
               Start Another Assessment

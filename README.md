@@ -1,58 +1,71 @@
-# Welcome to your Project
+# HomeValue+
 
-## Project info
+HomeValue+ is a full-stack platform focused on improving the value of Indian middle-class residential properties.
+It helps users explore listings, view curated home-improvement ideas, and get personalized recommendations.
+Admins can manage listings and recommendations from the dashboard.
 
+## Project Structure
 
-## How can I edit this code?
+- Frontend: `HomeValue-main`
+- Backend: `homevalue-backend`
 
-There are several ways of editing your application.
-
-**Use your preferred IDE**
-
-The only requirement is having Node.js & npm installed-  [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
--[View the Interactive Prototype][https://cling-wing-88060666.figma.site/]
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
+## Frontend Stack
 
 - Vite
-- TypeScript
 - React
-- shadcn-ui
+- TypeScript
 - Tailwind CSS
+- shadcn-ui
 
+## Backend Stack
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- H2 embedded database
 
+## Run the Backend
 
+Open a terminal in `homevalue-backend` and run:
+
+`mvn spring-boot:run`
+
+The backend starts on:
+
+`http://localhost:8080`
+
+Useful backend URLs:
+
+- API base: `http://localhost:8080/api`
+- H2 console: `http://localhost:8080/h2-console`
+
+H2 connection details:
+
+- JDBC URL: `jdbc:h2:file:./data/homevalue`
+- Username: `sa`
+- Password: leave blank
+
+## Run the Frontend
+
+Open a terminal in `HomeValue-main` and run:
+
+`npm install`
+
+`npm run dev`
+
+The frontend starts on:
+
+`http://localhost:5173`
+
+## Demo Accounts
+
+- Admin: `admin@homevalueplus.com` / `admin123`
+- User: `user@homevalueplus.com` / `user123`
+
+## Main Features
+
+- Public home page for browsing listings and enhancement ideas
+- Personalized property assessment flow
+- Admin dashboard for adding property listings
+- Admin dashboard for adding curated recommendations
+- Fallback demo data when the API is temporarily unavailable

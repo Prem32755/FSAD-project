@@ -1,7 +1,7 @@
-// src/contexts/AuthContext.tsx
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-type User = { email: string } | null;
+type UserRole = "admin" | "user";
+type User = { email: string; role: UserRole } | null;
 
 interface AuthContextValue {
   user: User;
@@ -20,16 +20,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User>(() => {
     try {
       const raw = localStorage.getItem(STORAGE_USER_KEY);
-      return raw ? JSON.parse(raw) as User : null;
+      return raw ? (JSON.parse(raw) as User) : null;
     } catch {
       return null;
     }
   });
 
-  const isAdmin = user?.email === "admin@homevalue.com";
+  const isAdmin = user?.role === "admin";
 
   useEffect(() => {
-    // persist user
     if (user) localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(user));
     else localStorage.removeItem(STORAGE_USER_KEY);
   }, [user]);
@@ -37,9 +36,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const recordHistory = (email: string) => {
     try {
       const raw = localStorage.getItem(STORAGE_HISTORY_KEY);
-      const arr = raw ? JSON.parse(raw) as Array<{ email: string; at: string }> : [];
+      const arr = raw ? (JSON.parse(raw) as Array<{ email: string; at: string }>) : [];
       arr.unshift({ email, at: new Date().toISOString() });
-      // keep last 50
       localStorage.setItem(STORAGE_HISTORY_KEY, JSON.stringify(arr.slice(0, 50)));
     } catch (e) {
       console.error("Failed to record login history", e);
@@ -47,23 +45,38 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const login = async (email: string, password?: string) => {
-    // MOCK: Accept any non-empty email + password >= 6 chars. Admin checked in admin modal separately.
-    // Replace with real API call if available.
     if (!email) return false;
     if (!password || password.length < 6) return false;
 
-    // simulate async
-    await new Promise((res) => setTimeout(res, 600));
+    try {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+      const res = await fetch(`${baseUrl}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const u = { email };
-    setUser(u);
-    recordHistory(email);
-    return true;
+      if (!res.ok) {
+        return false;
+      }
+
+      const data = await res.json();
+      const nextUser = {
+        email: data.email ?? email,
+        role: (data.role === "admin" ? "admin" : "user") as UserRole,
+      };
+
+      setUser(nextUser);
+      recordHistory(nextUser.email);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   };
 
   const logout = () => {
     setUser(null);
-    // optional: keep history
   };
 
   const getHistory = () => {

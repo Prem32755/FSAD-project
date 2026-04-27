@@ -17,61 +17,60 @@ export const RecommendationsSection: React.FC = () => {
       setItems(res);
       setLoading(false);
     });
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  if (loading) return <div className="py-20 text-center">Loading recommendations…</div>;
+  if (loading) return <div className="py-20 text-center">Loading recommendations...</div>;
 
-  // split: featured (0-2), preview (3-5), lower (6+)
   const featured = items.slice(0, 3);
   const preview = items.slice(3, 6);
   const lower = items.slice(6);
 
   return (
-    <section id="recommendations" className="py-20 bg-background">
+    <section id="recommendations" className="bg-background py-20">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-4xl font-bold lg:text-5xl">
             Popular Home <span className="text-gradient-primary">Value Enhancements</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Curated picks at top, a short catalog preview, and full catalog below.
+          <p className="mx-auto max-w-3xl text-lg text-muted-foreground">
+            Curated picks at top, a short catalog preview, and the full recommendation list below.
           </p>
         </div>
 
-        {/* featured row */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {featured.map((f) => (
+        <div className="mb-8 grid gap-6 md:grid-cols-3">
+          {featured.map((item) => (
             <EnhancementCard
-              key={f.id}
-              id={f.id}
-              title={f.title}
-              short={f.short}
-              cost={f.costRange}
-              roi={f.roi}
-              duration={f.duration}
-              category={f.category}
-              priority={f.impact === "High" ? "high" : f.impact === "Medium" ? "medium" : "low"}
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              short={item.short}
+              cost={item.costRange}
+              roi={item.roi}
+              duration={item.duration}
+              category={item.category}
+              priority={item.impact === "High" ? "high" : item.impact === "Medium" ? "medium" : "low"}
               onLearnMore={(id) => setSelectedId(id || null)}
             />
           ))}
         </div>
 
-        {/* preview (Full Catalog) — now uses EnhancementCard compact for consistent look */}
         <div className="mb-8">
-          <h3 className="text-xl font-semibold mb-4">Full Catalog</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            {preview.map((p) => (
+          <h3 className="mb-4 text-xl font-semibold">Full Catalog</h3>
+          <div className="grid gap-6 md:grid-cols-3">
+            {preview.map((item) => (
               <EnhancementCard
-                key={`prev-${p.id}`}
-                id={p.id}
-                title={p.title}
-                short={p.short}
-                cost={p.costRange}
-                roi={p.roi}
-                duration={p.duration}
-                category={p.category}
-                priority={p.impact === "High" ? "high" : p.impact === "Medium" ? "medium" : "low"}
+                key={`preview-${item.id}`}
+                id={item.id}
+                title={item.title}
+                short={item.short}
+                cost={item.costRange}
+                roi={item.roi}
+                duration={item.duration}
+                category={item.category}
+                priority={item.impact === "High" ? "high" : item.impact === "Medium" ? "medium" : "low"}
                 compact
                 onLearnMore={(id) => setSelectedId(id || null)}
               />
@@ -79,21 +78,20 @@ export const RecommendationsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* lower grid */}
         <div className="mb-8">
-          <h3 className="text-xl font-semibold mb-4">More Enhancements</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {lower.slice(0, visibleCount).map((l) => (
+          <h3 className="mb-4 text-xl font-semibold">More Enhancements</h3>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {lower.slice(0, visibleCount).map((item) => (
               <EnhancementCard
-                key={`lower-${l.id}`}
-                id={l.id}
-                title={l.title}
-                short={l.short}
-                cost={l.costRange}
-                roi={l.roi}
-                duration={l.duration}
-                category={l.category}
-                priority={l.impact === "High" ? "high" : l.impact === "Medium" ? "medium" : "low"}
+                key={`more-${item.id}`}
+                id={item.id}
+                title={item.title}
+                short={item.short}
+                cost={item.costRange}
+                roi={item.roi}
+                duration={item.duration}
+                category={item.category}
+                priority={item.impact === "High" ? "high" : item.impact === "Medium" ? "medium" : "low"}
                 onLearnMore={(id) => setSelectedId(id || null)}
               />
             ))}
@@ -102,7 +100,7 @@ export const RecommendationsSection: React.FC = () => {
 
         {lower.length > visibleCount && (
           <div className="text-center">
-            <Button onClick={() => setVisibleCount((v) => v + 3)} className="btn-hero">
+            <Button onClick={() => setVisibleCount((count) => count + 3)} className="btn-hero">
               View More
             </Button>
           </div>

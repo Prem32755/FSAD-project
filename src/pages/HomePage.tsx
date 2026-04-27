@@ -1,102 +1,71 @@
 import React, { useState } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/components/HeroSection';
+import { PropertyGrid } from '@/components/PropertyGrid';
 import { FeaturesSection } from '@/components/FeaturesSection';
-import { RecommendationsSection } from '@/components/RecommendationsSection';
-import { EnhancementCategories } from '@/components/EnhancementCategories';
-import { ValueCalculator } from '@/components/ValueCalculator';
-import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
-import { PropertyAssessmentForm } from '@/components/PropertyAssessmentForm';
-import { AdminLoginModal } from '@/components/AdminLoginModal';
-import { PersonalizedResults } from '@/components/PersonalizedResults';
 import { ChatbotButton } from '@/components/ChatbotButton';
-
-interface PropertyFormData {
-  propertyType: string;
-  city: string;
-  locality: string;
-  propertyAge: number;
-  area: number;
-  budget: string;
-  currentCondition: string;
-}
+import { PropertyAssessmentForm } from '@/components/PropertyAssessmentForm';
+import { PersonalizedResults } from '@/components/PersonalizedResults';
+import { RecommendationsSection } from '@/components/RecommendationsSection';
+import { UserRequestSection } from '@/components/UserRequestSection';
 
 const HomePage: React.FC = () => {
-  const [showPropertyForm, setShowPropertyForm] = useState(false);
-  const [showAdminModal, setShowAdminModal] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [propertyData, setPropertyData] = useState<PropertyFormData | null>(null);
+  const [showAssessmentForm, setShowAssessmentForm] = useState(false);
+  const [assessmentResult, setAssessmentResult] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handlePropertySubmit = (data: PropertyFormData) => {
-    setPropertyData(data);
-    // close form and show results
-    setShowPropertyForm(false);
-    setShowResults(true);
-  };
-
-  const handleGetStarted = () => {
-    // If results are open, close them when user re-opens the form
-    setShowResults(false);
-    setShowPropertyForm(true);
-  };
-
-  const handleAdminClick = () => {
-    setShowAdminModal(true);
-  };
-
-  const handleCloseResults = () => {
-    setShowResults(false);
-    setPropertyData(null);
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    document.getElementById('listings')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <Navigation onAdminClick={handleAdminClick} />
+    <div className="min-h-screen bg-white">
+      <Navigation />
+      <HeroSection onSearch={handleSearch} />
 
-      {/* Hero Section */}
-      <HeroSection onGetStarted={handleGetStarted} />
+      <section id="listings" className="py-16 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="mb-10 text-center md:text-left">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">Middle-Class Property Listings</h2>
+                <p className="text-gray-600 max-w-2xl">
+                  Browse residential properties and identify practical upgrades that can improve resale value or rental appeal.
+                  {searchQuery && (
+                    <span className="font-semibold block mt-2 text-primary">
+                      Results for: "{searchQuery}"
+                    </span>
+                  )}
+                </p>
+              </div>
+              <button onClick={() => setShowAssessmentForm(true)} className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90">
+                Get Personalized Ideas
+              </button>
+            </div>
+          </div>
 
-      {/* Features Section */}
-      <FeaturesSection />
+          <PropertyGrid searchQuery={searchQuery} />
+        </div>
+      </section>
 
-      {/* Recommendations Section */}
       <RecommendationsSection />
-
-      {/* Enhancement Categories */}
-      <EnhancementCategories />
-
-      {/* Value Calculator */}
-      <ValueCalculator />
-
-      {/* Contact Section */}
-      <ContactSection />
-
-      {/* Footer */}
+      <UserRequestSection />
+      <FeaturesSection />
       <Footer />
-
-      {/* Floating Chatbot */}
       <ChatbotButton />
 
-      {/* Modals */}
-      {showPropertyForm && (
+      {showAssessmentForm && (
         <PropertyAssessmentForm
-          onClose={() => setShowPropertyForm(false)}
-          onSubmit={handlePropertySubmit}
+          onClose={() => setShowAssessmentForm(false)}
+          onSubmit={(data) => {
+            setAssessmentResult(data);
+            setShowAssessmentForm(false);
+          }}
         />
       )}
-
-      {showAdminModal && (
-        <AdminLoginModal onClose={() => setShowAdminModal(false)} />
-      )}
-
-      {showResults && propertyData && (
-        <PersonalizedResults
-          propertyData={propertyData}
-          onClose={handleCloseResults}
-        />
-      )}
+      {assessmentResult && <PersonalizedResults propertyData={assessmentResult} onClose={() => setAssessmentResult(null)} />}
     </div>
   );
 };
