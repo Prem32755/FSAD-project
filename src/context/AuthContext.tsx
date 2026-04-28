@@ -2,11 +2,16 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 type UserRole = "admin" | "user";
 type User = { email: string; role: UserRole } | null;
+type AuthResult = {
+  ok: boolean;
+  message?: string;
+  role?: UserRole;
+};
 
 interface AuthContextValue {
   user: User;
   isAdmin: boolean;
-  login: (email: string, password?: string) => Promise<boolean>;
+  login: (email: string, password?: string) => Promise<AuthResult>;
   logout: () => void;
   getHistory: () => Array<{ email: string; at: string }>;
 }
@@ -45,8 +50,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const login = async (email: string, password?: string) => {
-    if (!email) return false;
-    if (!password || password.length < 6) return false;
+    if (!email) {
+      return { ok: false, message: "Email is required." };
+    }
+    if (!password || password.length < 6) {
+      return { ok: false, message: "Password must be at least 6 characters." };
+    }
 
     try {
       const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
@@ -57,7 +66,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (!res.ok) {
-        return false;
+        const message = (await res.text()) || "Login failed.";
+        return { ok: false, message };
       }
 
       const data = await res.json();
@@ -68,10 +78,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       setUser(nextUser);
       recordHistory(nextUser.email);
-      return true;
+      return { ok: true, role: nextUser.role };
     } catch (error) {
       console.error(error);
-      return false;
+      return {
+        ok: false,
+        message: "Could not reach the server. Please make sure the backend is running.",
+      };
     }
   };
 

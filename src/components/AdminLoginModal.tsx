@@ -15,7 +15,7 @@ interface AdminLoginModalProps {
 export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { login, isAdmin } = useAuth();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,10 +23,10 @@ export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const ok = await login(formData.email, formData.password);
+    const result = await login(formData.email.trim().toLowerCase(), formData.password);
     setIsLoading(false);
 
-    if (ok && formData.email.trim().toLowerCase() === 'admin@homevalueplus.com') {
+    if (result.ok && result.role === 'admin') {
       toast({
         title: 'Login Successful!',
         description: 'Welcome to the Admin Dashboard.',
@@ -38,7 +38,9 @@ export const AdminLoginModal = ({ onClose }: AdminLoginModalProps) => {
 
     toast({
       title: 'Login Failed',
-      description: 'Use admin@homevalueplus.com / admin123 for admin access.',
+      description: result.ok
+        ? 'This account does not have admin access.'
+        : (result.message || 'Use admin@homevalueplus.com / admin123 for admin access.'),
       variant: 'destructive'
     });
   };

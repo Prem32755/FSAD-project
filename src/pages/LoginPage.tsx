@@ -73,9 +73,10 @@ const LoginPage: React.FC = () => {
         failureReason = "Could not reach the server. Please make sure the backend is running.";
       }
     } else {
-      ok = await login(normalizedEmail, password);
-      if (!ok) {
-        failureReason = "Invalid email or password. If you just created the account, try logging in again after registration succeeds.";
+      const result = await login(normalizedEmail, password);
+      ok = result.ok;
+      if (!result.ok) {
+        failureReason = result.message || "Invalid email or password.";
       }
     }
 
