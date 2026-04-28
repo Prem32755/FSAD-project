@@ -13,6 +13,7 @@ import {
   ArrowLeft,
   Plus,
   MessagesSquare,
+  Trash2,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { api, EnhancementSummary } from '@/lib/mockApi';
@@ -25,6 +26,8 @@ interface DashboardStats {
   totalAssessments: number;
   avgValueIncrease: string;
   activeRecommendations: number;
+  activeFeatures?: number;
+  totalRequests?: number;
   pendingRequests?: number;
 }
 
@@ -35,6 +38,9 @@ interface CustomerRequest {
   phone?: string;
   city?: string;
   propertyType?: string;
+  requestGoal?: string;
+  budgetRange?: string;
+  timeline?: string;
   requirementType?: string;
   message: string;
   status: string;
@@ -102,6 +108,7 @@ const AdminDashboard = () => {
   const [isSavingListing, setIsSavingListing] = useState(false);
   const [isSavingRecommendation, setIsSavingRecommendation] = useState(false);
   const [respondingId, setRespondingId] = useState<number | null>(null);
+  const [deletingPropertyId, setDeletingPropertyId] = useState<number | null>(null);
 
   useEffect(() => {
     const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
@@ -308,6 +315,37 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleDeleteProperty = async (propertyId: number) => {
+    setDeletingPropertyId(propertyId);
+
+    try {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+      const response = await fetch(baseUrl + '/properties/' + propertyId, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Could not delete property');
+      }
+
+      const nextProperties = properties.filter((property) => property.id !== propertyId);
+      setProperties(nextProperties);
+      refreshStatsAfterListing(nextProperties.length);
+      toast({
+        title: 'Property removed',
+        description: 'The selected property was removed from the listing.',
+      });
+    } catch {
+      toast({
+        title: 'Delete failed',
+        description: 'The property could not be removed right now.',
+        variant: 'destructive',
+      });
+    } finally {
+      setDeletingPropertyId(null);
+    }
+  };
+
   const handleRespond = async (requestId: number) => {
     const adminResponse = responseDrafts[requestId]?.trim();
     const status = statusDrafts[requestId] || 'Answered';
@@ -404,10 +442,13 @@ const AdminDashboard = () => {
                       <div className="mb-3 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                         <div>
                           <p className="text-lg font-semibold text-slate-900">{request.requirementType || 'General request'}</p>
+                          {request.requestGoal && <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{request.requestGoal}</p>}
                           <p className="text-sm text-slate-600">{request.userName} | {request.userEmail}</p>
                           <p className="mt-1 text-xs text-slate-500">
                             {request.city ? request.city + ' | ' : ''}
                             {request.propertyType ? request.propertyType + ' | ' : ''}
+                            {request.budgetRange ? request.budgetRange + ' | ' : ''}
+                            {request.timeline ? request.timeline + ' | ' : ''}
                             {request.phone ? request.phone + ' | ' : ''}
                             {request.createdAt ? new Date(request.createdAt).toLocaleString('en-IN') : 'Recently submitted'}
                           </p>
@@ -467,6 +508,16 @@ const AdminDashboard = () => {
                     <div className="flex flex-wrap items-center gap-3">
                       <Badge variant="outline">{property.propertyType}</Badge>
                       <Badge variant="secondary">Rs. {property.price.toLocaleString('en-IN')}</Badge>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleDeleteProperty(Number(property.id))}
+                        disabled={deletingPropertyId === Number(property.id)}
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        {deletingPropertyId === Number(property.id) ? 'Removing...' : 'Remove'}
+                      </Button>
                     </div>
                   </div>
                 ))}
@@ -615,6 +666,8 @@ const AdminDashboard = () => {
                 <div className="flex items-center justify-between"><span className="text-sm">Platform Status</span><Badge className="bg-green-500 text-white">Online</Badge></div>
                 <div className="flex items-center justify-between"><span className="text-sm">Database</span><Badge className="bg-green-500 text-white">Ready</Badge></div>
                 <div className="flex items-center justify-between"><span className="text-sm">API Status</span><Badge className="bg-green-500 text-white">Connected</Badge></div>
+                <div className="flex items-center justify-between"><span className="text-sm">Feature Cards</span><Badge variant="secondary">{(stats.activeFeatures ?? 6).toLocaleString('en-IN')}</Badge></div>
+                <div className="flex items-center justify-between"><span className="text-sm">Total Requests</span><Badge variant="secondary">{(stats.totalRequests ?? requests.length).toLocaleString('en-IN')}</Badge></div>
               </CardContent>
             </Card>
           </div>
